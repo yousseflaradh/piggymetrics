@@ -13,3 +13,11 @@ spring:
 server:
   port: 8888
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,hystrix.stream
+  metrics:
+    tags:
+      application: ${spring.application.name}

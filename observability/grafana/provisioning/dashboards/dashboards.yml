@@ -1,0 +1,7 @@
+apiVersion: 1
+providers:
+  - name: piggymetrics
+    folder: PiggyMetrics
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards

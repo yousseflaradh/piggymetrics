@@ -1,0 +1,67 @@
+name: ci
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    strategy:
+      fail-fast: false
+      matrix:
+        module:
+          - config
+          - registry
+          - gateway
+          - auth-service
+          - account-service
+          - statistics-service
+          - notification-service
+          - monitoring
+          - turbine-stream-service
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Spring Boot 2.0 and JaCoCo 0.7 need Java 8 to build and test
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+          cache: maven
+
+      - name: Build and test
+        run: mvn -B -pl ${{ matrix.module }} -am verify
+
+      # Recent SonarQube scanners need Java 17 to run; the compiled classes are reused
+      - uses: actions/setup-java@v4
+        if: ${{ env.SONAR_TOKEN != '' }}
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: SonarQube analysis
+        if: ${{ env.SONAR_TOKEN != '' }}
+        run: >
+          mvn -B -pl ${{ matrix.module }}
+          org.sonarsource.scanner.maven:sonar-maven-plugin:3.11.0.3922:sonar
+          -Dsonar.projectKey=piggymetrics-${{ matrix.module }}
+          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
+          -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.qualitygate.wait=true
+
+      - name: Build image
+        run: docker build -t piggymetrics-${{ matrix.module }}:${{ github.sha }} ${{ matrix.module }}
+
+      - name: Trivy image scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: piggymetrics-${{ matrix.module }}:${{ github.sha }}
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: '1'

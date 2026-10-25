@@ -25,3 +25,12 @@ security:
 spring:
   rabbitmq:
     host: rabbitmq
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,hystrix.stream
+  metrics:
+    tags:
+      application: ${spring.application.name}
