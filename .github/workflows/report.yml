@@ -21,9 +21,13 @@ env:
   MONGODB_PASSWORD: mongo-pass
   SONAR_PASSWORD: Piggy-Report-2026!
 
+concurrency:
+  group: report
+  cancel-in-progress: true
+
 jobs:
   sonarqube:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     services:
       sonarqube:
         image: sonarqube:10.6-community
@@ -101,7 +105,7 @@ jobs:
           path: out
 
   trivy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -121,7 +125,7 @@ jobs:
       - name: Scan with Trivy
         run: |
           mkdir -p out
-          T="docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.cache/trivy:/root/.cache/ -v $PWD:/src aquasec/trivy:0.56.2"
+          T="docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.cache/trivy:/root/.cache/ -v $PWD:/src aquasec/trivy:0.76.1"
           $T --version > out/trivy-version.txt
           for img in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep '^piggymetrics-'); do
             f=$(echo $img | tr ':/' '__')
@@ -149,7 +153,7 @@ jobs:
           path: out
 
   stack:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -224,7 +228,7 @@ jobs:
   publish:
     needs: [sonarqube, trivy, stack]
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/download-artifact@v4
         with:
