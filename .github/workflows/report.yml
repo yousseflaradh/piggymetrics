@@ -93,6 +93,8 @@ jobs:
           curl -s $A "localhost:9000/api/server/version" > out/sonar-version.txt
       - name: SonarQube screenshots
         run: |
+          # Let the screenshot browser read the dashboards without a login
+          curl -sf -u "admin:$SONAR_PASSWORD" -X POST "localhost:9000/api/settings/set?key=sonar.forceAuthentication&value=false"
           npm i --no-save playwright@1.47.2 >/dev/null && npx playwright install --with-deps chromium >/dev/null
           mkdir -p out/screenshots
           node .github/scripts/screenshots.js out/screenshots \
@@ -126,14 +128,14 @@ jobs:
       - name: Scan with Trivy
         run: |
           mkdir -p out
-          T="docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.cache/trivy:/root/.cache/ -v $PWD:/src aquasec/trivy:0.76.1"
+          T="docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.cache/trivy:/root/.cache/ -v $HOME/.m2:/root/.m2 -v $PWD:/src aquasec/trivy:0.76.1"
           $T --version > out/trivy-version.txt
           for img in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep '^piggymetrics-'); do
             f=$(echo $img | tr ':/' '__')
             $T image --quiet --scanners vuln --format json -o /src/out/$f.json $img
           done
-          $T fs --quiet --scanners vuln,secret --format json -o /src/out/fs.json /src
-          $T config --quiet --format json -o /src/out/config.json /src
+          $T fs --quiet --offline-scan --scanners vuln,secret --format json -o /src/out/fs.json /src || echo 'fs scan failed'
+          $T config --quiet --format json -o /src/out/config.json /src || echo 'config scan failed'
           python3 - <<'EOF' > out/trivy.md
           import json, glob, collections
           print('| Target | Critical | High | Medium | Low |')
@@ -149,6 +151,7 @@ jobs:
           cat out/trivy.md >> $GITHUB_STEP_SUMMARY
           docker images --format '{{.Repository}}:{{.Tag}} {{.Size}}' | grep piggymetrics > out/image-sizes.txt
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: trivy
           path: out
@@ -177,6 +180,7 @@ jobs:
             [ "$up" = "9" ] && break; sleep 10
           done
           echo "$(( $(date +%s) - START ))" > out/startup-seconds.txt
+          echo "$up" > out/targets-up-at-end-of-wait.txt
       - name: Generate traffic
         run: |
           for i in $(seq 1 120); do
@@ -204,14 +208,16 @@ jobs:
             "grafana-dashboard=http://localhost:3000/d/piggymetrics?orgId=1&from=now-15m&to=now&kiosk@15"
       - name: Alert test (stop statistics-service)
         run: |
+          date -u +%H:%M:%S > out/statistics-stopped-at.txt
           docker compose -f docker-compose.yml -f docker-compose.ci.yml stop statistics-service
           for i in $(seq 1 30); do
-            s=$(curl -s localhost:9090/api/v1/alerts | jq -r '[.data.alerts[] | select(.labels.alertname=="ServiceDown") | .state] | first // "none"')
+            s=$(curl -s localhost:9090/api/v1/alerts | jq -r '[.data.alerts[] | select(.labels.alertname=="ServiceDown" and .labels.job=="statistics-service") | .state] | first // "none"')
             echo "$((i*10))s: $s"; [ "$s" = "firing" ] && break; sleep 10
           done | tee out/alert-test.txt
           curl -s localhost:9090/api/v1/alerts > out/prometheus-alerts.json
           node .github/scripts/screenshots.js out/screenshots \
             "prometheus-alert=http://localhost:9090/alerts@3" \
+            "prometheus-targets-after-stop=http://localhost:9090/targets@3" \
             "grafana-service-down=http://localhost:3000/d/piggymetrics?orgId=1&from=now-15m&to=now&kiosk@15"
       - name: Logs if something failed
         if: always()

@@ -14,7 +14,7 @@ const { chromium } = require('playwright');
     const [name, rest] = shot.split(/=(.*)/s);
     const [url, wait] = rest.split('@');
     try {
-      if (name.startsWith('sonar') && !sonarLoggedIn) {
+      if (process.env.SONAR_LOGIN === '1' && name.startsWith('sonar') && !sonarLoggedIn) {
         const base = new URL(url).origin;
         await page.goto(`${base}/sessions/new`, { waitUntil: 'networkidle' });
         await page.fill('input[name=login]', 'admin');

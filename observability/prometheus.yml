@@ -29,6 +29,7 @@ scrape_configs:
   - job_name: monitoring
     metrics_path: /actuator/prometheus
     static_configs: [{targets: ['monitoring:8080']}]
+  # Netty listens on 8080 here, not on the 8989 that the Dockerfile exposes
   - job_name: turbine-stream-service
     metrics_path: /actuator/prometheus
-    static_configs: [{targets: ['turbine-stream-service:8989']}]
+    static_configs: [{targets: ['turbine-stream-service:8080']}]
