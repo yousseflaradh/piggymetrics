@@ -1,0 +1,153 @@
+time="2026-10-25T13:18:03Z" level=warning msg="/home/runner/work/piggymetrics/piggymetrics/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-10-25T13:18:03Z" level=warning msg="/home/runner/work/piggymetrics/piggymetrics/docker-compose.ci.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-10-25T13:18:04Z" level=warning msg="/home/runner/work/piggymetrics/piggymetrics/docker-compose.observability.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.913536061Z level=info msg="Executing migration" id="add unique index signing_key.key_id"
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.914975368Z level=info msg="Migration successfully executed" id="add unique index signing_key.key_id" duration=1.438967ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.917651134Z level=info msg="Executing migration" id="set legacy alert migration status in kvstore"
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.918842035Z level=info msg="Migration successfully executed" id="set legacy alert migration status in kvstore" duration=1.19066ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.920115695Z level=info msg="Executing migration" id="migrate record of created folders during legacy migration to kvstore"
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.928413697Z level=info msg="Migration successfully executed" id="migrate record of created folders during legacy migration to kvstore" duration=8.298222ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.930100155Z level=info msg="Executing migration" id="Add folder_uid for dashboard"
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.951731515Z level=info msg="Migration successfully executed" id="Add folder_uid for dashboard" duration=21.616682ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.953064504Z level=info msg="Executing migration" id="Populate dashboard folder_uid column"
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.954518629Z level=info msg="Migration successfully executed" id="Populate dashboard folder_uid column" duration=1.454706ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.955679246Z level=info msg="Executing migration" id="Add unique index for dashboard_org_id_folder_uid_title"
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.955729049Z level=info msg="Migration successfully executed" id="Add unique index for dashboard_org_id_folder_uid_title" duration=50.544µs
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.956830335Z level=info msg="Executing migration" id="Delete unique index for dashboard_org_id_folder_id_title"
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.958207697Z level=info msg="Migration successfully executed" id="Delete unique index for dashboard_org_id_folder_id_title" duration=1.376239ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.982927767Z level=info msg="Executing migration" id="Delete unique index for dashboard_org_id_folder_uid_title"
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.983006614Z level=info msg="Migration successfully executed" id="Delete unique index for dashboard_org_id_folder_uid_title" duration=80.38µs
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.985275477Z level=info msg="Executing migration" id="Add unique index for dashboard_org_id_folder_uid_title_is_folder"
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.988181262Z level=info msg="Migration successfully executed" id="Add unique index for dashboard_org_id_folder_uid_title_is_folder" duration=2.905355ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.990223426Z level=info msg="Executing migration" id="Restore index for dashboard_org_id_folder_id_title"
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.991535185Z level=info msg="Migration successfully executed" id="Restore index for dashboard_org_id_folder_id_title" duration=1.311319ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.994739538Z level=info msg="Executing migration" id="create sso_setting table"
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.995948435Z level=info msg="Migration successfully executed" id="create sso_setting table" duration=1.209718ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.997207017Z level=info msg="Executing migration" id="copy kvstore migration status to each org"
+grafana-1  | logger=migrator t=2026-10-25T13:10:46.99801691Z level=info msg="Migration successfully executed" id="copy kvstore migration status to each org" duration=810.353µs
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.005468801Z level=info msg="Executing migration" id="add back entry for orgid=0 migrated status"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.005857467Z level=info msg="Migration successfully executed" id="add back entry for orgid=0 migrated status" duration=389.737µs
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.007049403Z level=info msg="Executing migration" id="managed dashboard permissions annotation actions migration"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.007652338Z level=info msg="Migration successfully executed" id="managed dashboard permissions annotation actions migration" duration=602.866µs
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.008840336Z level=info msg="Executing migration" id="create cloud_migration table v1"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.009837588Z level=info msg="Migration successfully executed" id="create cloud_migration table v1" duration=996.841µs
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.011083214Z level=info msg="Executing migration" id="create cloud_migration_run table v1"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.012137593Z level=info msg="Migration successfully executed" id="create cloud_migration_run table v1" duration=1.053857ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.014386652Z level=info msg="Executing migration" id="add stack_id column"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.024803653Z level=info msg="Migration successfully executed" id="add stack_id column" duration=10.416549ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.026003843Z level=info msg="Executing migration" id="add region_slug column"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.039368708Z level=info msg="Migration successfully executed" id="add region_slug column" duration=13.352091ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.040672903Z level=info msg="Executing migration" id="add cluster_slug column"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.052228993Z level=info msg="Migration successfully executed" id="add cluster_slug column" duration=11.554437ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.054097222Z level=info msg="Executing migration" id="add migration uid column"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.064893207Z level=info msg="Migration successfully executed" id="add migration uid column" duration=10.795764ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.066288271Z level=info msg="Executing migration" id="Update uid column values for migration"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.06666771Z level=info msg="Migration successfully executed" id="Update uid column values for migration" duration=379.248µs
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.090907372Z level=info msg="Executing migration" id="Add unique index migration_uid"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.092260208Z level=info msg="Migration successfully executed" id="Add unique index migration_uid" duration=1.354458ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.108696244Z level=info msg="Executing migration" id="add migration run uid column"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.118880019Z level=info msg="Migration successfully executed" id="add migration run uid column" duration=10.183595ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.120213889Z level=info msg="Executing migration" id="Update uid column values for migration run"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.12039626Z level=info msg="Migration successfully executed" id="Update uid column values for migration run" duration=183.743µs
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.121707208Z level=info msg="Executing migration" id="Add unique index migration_run_uid"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.122906958Z level=info msg="Migration successfully executed" id="Add unique index migration_run_uid" duration=1.199309ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.124130472Z level=info msg="Executing migration" id="Rename table cloud_migration to cloud_migration_session_tmp_qwerty - v1"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.156973015Z level=info msg="Migration successfully executed" id="Rename table cloud_migration to cloud_migration_session_tmp_qwerty - v1" duration=32.838906ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.158226124Z level=info msg="Executing migration" id="create cloud_migration_session v2"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.159431555Z level=info msg="Migration successfully executed" id="create cloud_migration_session v2" duration=1.20501ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.161112223Z level=info msg="Executing migration" id="create index UQE_cloud_migration_session_uid - v2"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.162484045Z level=info msg="Migration successfully executed" id="create index UQE_cloud_migration_session_uid - v2" duration=1.371532ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.164159193Z level=info msg="Executing migration" id="copy cloud_migration_session v1 to v2"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.164627467Z level=info msg="Migration successfully executed" id="copy cloud_migration_session v1 to v2" duration=468.605µs
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.165782694Z level=info msg="Executing migration" id="drop cloud_migration_session_tmp_qwerty"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.166922673Z level=info msg="Migration successfully executed" id="drop cloud_migration_session_tmp_qwerty" duration=1.139888ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.168628768Z level=info msg="Executing migration" id="Rename table cloud_migration_run to cloud_migration_snapshot_tmp_qwerty - v1"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.210710361Z level=info msg="Migration successfully executed" id="Rename table cloud_migration_run to cloud_migration_snapshot_tmp_qwerty - v1" duration=42.079069ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.212411037Z level=info msg="Executing migration" id="create cloud_migration_snapshot v2"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.213745709Z level=info msg="Migration successfully executed" id="create cloud_migration_snapshot v2" duration=1.334151ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.215009972Z level=info msg="Executing migration" id="create index UQE_cloud_migration_snapshot_uid - v2"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.216191107Z level=info msg="Migration successfully executed" id="create index UQE_cloud_migration_snapshot_uid - v2" duration=1.180755ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.219581868Z level=info msg="Executing migration" id="copy cloud_migration_snapshot v1 to v2"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.219975183Z level=info msg="Migration successfully executed" id="copy cloud_migration_snapshot v1 to v2" duration=394.316µs
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.22103936Z level=info msg="Executing migration" id="drop cloud_migration_snapshot_tmp_qwerty"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.222005874Z level=info msg="Migration successfully executed" id="drop cloud_migration_snapshot_tmp_qwerty" duration=965.974µs
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.225958184Z level=info msg="Executing migration" id="add snapshot upload_url column"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.237098655Z level=info msg="Migration successfully executed" id="add snapshot upload_url column" duration=11.1397ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.240157807Z level=info msg="Executing migration" id="add snapshot status column"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.250244521Z level=info msg="Migration successfully executed" id="add snapshot status column" duration=10.086303ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.254494646Z level=info msg="Executing migration" id="add snapshot local_directory column"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.265437158Z level=info msg="Migration successfully executed" id="add snapshot local_directory column" duration=10.941019ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.268552214Z level=info msg="Executing migration" id="add snapshot gms_snapshot_uid column"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.299241927Z level=info msg="Migration successfully executed" id="add snapshot gms_snapshot_uid column" duration=30.686738ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.300701102Z level=info msg="Executing migration" id="add snapshot encryption_key column"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.310166235Z level=info msg="Migration successfully executed" id="add snapshot encryption_key column" duration=9.464692ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.311732539Z level=info msg="Executing migration" id="add snapshot error_string column"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.323531978Z level=info msg="Migration successfully executed" id="add snapshot error_string column" duration=11.796444ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.324872832Z level=info msg="Executing migration" id="create cloud_migration_resource table v1"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.325854675Z level=info msg="Migration successfully executed" id="create cloud_migration_resource table v1" duration=982.004µs
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.327154822Z level=info msg="Executing migration" id="delete cloud_migration_snapshot.result column"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.373461375Z level=info msg="Migration successfully executed" id="delete cloud_migration_snapshot.result column" duration=46.303146ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.375104445Z level=info msg="Executing migration" id="alter kv_store.value to longtext"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.375175307Z level=info msg="Migration successfully executed" id="alter kv_store.value to longtext" duration=71.704µs
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.377749003Z level=info msg="Executing migration" id="add notification_settings column to alert_rule table"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.388960066Z level=info msg="Migration successfully executed" id="add notification_settings column to alert_rule table" duration=11.210521ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.390334021Z level=info msg="Executing migration" id="add notification_settings column to alert_rule_version table"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.406559755Z level=info msg="Migration successfully executed" id="add notification_settings column to alert_rule_version table" duration=16.218811ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.410517718Z level=info msg="Executing migration" id="removing scope from alert.instances:read action migration"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.410961373Z level=info msg="Migration successfully executed" id="removing scope from alert.instances:read action migration" duration=1.33505ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.412243257Z level=info msg="Executing migration" id="managed folder permissions alerting silences actions migration"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.412503082Z level=info msg="Migration successfully executed" id="managed folder permissions alerting silences actions migration" duration=259.494µs
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.413770508Z level=info msg="Executing migration" id="add record column to alert_rule table"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.423796198Z level=info msg="Migration successfully executed" id="add record column to alert_rule table" duration=10.024557ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.425209136Z level=info msg="Executing migration" id="add record column to alert_rule_version table"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.433778437Z level=info msg="Migration successfully executed" id="add record column to alert_rule_version table" duration=8.56862ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.435136622Z level=info msg="Executing migration" id="add resolved_at column to alert_instance table"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.4449951Z level=info msg="Migration successfully executed" id="add resolved_at column to alert_instance table" duration=9.858218ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.448441144Z level=info msg="Executing migration" id="add last_sent_at column to alert_instance table"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.457322227Z level=info msg="Migration successfully executed" id="add last_sent_at column to alert_instance table" duration=8.87997ms
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.45865646Z level=info msg="Executing migration" id="Enable traceQL streaming for all Tempo datasources"
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.458683261Z level=info msg="Migration successfully executed" id="Enable traceQL streaming for all Tempo datasources" duration=27.582µs
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.459916533Z level=info msg="migrations completed" performed=594 skipped=0 duration=3.42242583s
+grafana-1  | logger=migrator t=2026-10-25T13:10:47.460497668Z level=info msg="Unlocking database"
+grafana-1  | logger=sqlstore t=2026-10-25T13:10:47.476560911Z level=info msg="Created default admin" user=admin
+grafana-1  | logger=sqlstore t=2026-10-25T13:10:47.476819494Z level=info msg="Created default organization"
+grafana-1  | logger=secrets t=2026-10-25T13:10:47.47829924Z level=info msg="Envelope encryption state" enabled=true currentprovider=secretKey.v1
+grafana-1  | logger=plugin.angulardetectorsprovider.dynamic t=2026-10-25T13:10:47.567681847Z level=info msg="Restored cache from database" duration=575.432µs
+grafana-1  | logger=plugin.store t=2026-10-25T13:10:47.569652968Z level=info msg="Loading plugins..."
+grafana-1  | logger=plugins.registration t=2026-10-25T13:10:47.648412105Z level=error msg="Could not register plugin" pluginId=xychart error="plugin xychart is already registered"
+grafana-1  | logger=plugins.initialization t=2026-10-25T13:10:47.648498696Z level=error msg="Could not initialize plugin" pluginId=xychart error="plugin xychart is already registered"
+grafana-1  | logger=local.finder t=2026-10-25T13:10:47.648682459Z level=warn msg="Skipping finding plugins as directory does not exist" path=/usr/share/grafana/plugins-bundled
+grafana-1  | logger=plugin.store t=2026-10-25T13:10:47.648736429Z level=info msg="Plugins loaded" count=54 duration=79.085887ms
+grafana-1  | logger=query_data t=2026-10-25T13:10:47.656089982Z level=info msg="Query Service initialization"
+grafana-1  | logger=live.push_http t=2026-10-25T13:10:47.660262161Z level=info msg="Live Push Gateway initialization"
+grafana-1  | logger=ngalert.notifier.alertmanager org=1 t=2026-10-25T13:10:47.666971695Z level=info msg="Applying new configuration to Alertmanager" configHash=d2c56faca6af2a5772ff4253222f7386
+grafana-1  | logger=ngalert.state.manager t=2026-10-25T13:10:47.673342048Z level=info msg="Running in alternative execution of Error/NoData mode"
+grafana-1  | logger=infra.usagestats.collector t=2026-10-25T13:10:47.675903647Z level=info msg="registering usage stat providers" usageStatsProvidersLen=2
+grafana-1  | logger=provisioning.datasources t=2026-10-25T13:10:47.67758607Z level=info msg="inserting datasource from configuration" name=Prometheus uid=prometheus
+grafana-1  | logger=provisioning.plugins t=2026-10-25T13:10:47.697289232Z level=error msg="Failed to read plugin provisioning files from directory" path=/etc/grafana/provisioning/plugins error="open /etc/grafana/provisioning/plugins: no such file or directory"
+grafana-1  | logger=provisioning.alerting t=2026-10-25T13:10:47.697338364Z level=error msg="can't read alerting provisioning files from directory" path=/etc/grafana/provisioning/alerting error="open /etc/grafana/provisioning/alerting: no such file or directory"
+grafana-1  | logger=provisioning.alerting t=2026-10-25T13:10:47.697346329Z level=info msg="starting to provision alerting"
+grafana-1  | logger=provisioning.alerting t=2026-10-25T13:10:47.697355045Z level=info msg="finished to provision alerting"
+grafana-1  | logger=ngalert.state.manager t=2026-10-25T13:10:47.69969923Z level=info msg="Warming state cache for startup"
+grafana-1  | logger=ngalert.state.manager t=2026-10-25T13:10:47.69995147Z level=info msg="State cache has been initialized" states=0 duration=251.328µs
+grafana-1  | logger=http.server t=2026-10-25T13:10:47.700948216Z level=info msg="HTTP Server Listen" address=[::]:3000 protocol=http subUrl= socket=
+grafana-1  | logger=grafanaStorageLogger t=2026-10-25T13:10:47.701046566Z level=info msg="Storage starting"
+grafana-1  | logger=ngalert.multiorg.alertmanager t=2026-10-25T13:10:47.715044612Z level=info msg="Starting MultiOrg Alertmanager"
+grafana-1  | logger=ngalert.scheduler t=2026-10-25T13:10:47.715072735Z level=info msg="Starting scheduler" tickInterval=10s maxAttempts=1
+grafana-1  | logger=ticker t=2026-10-25T13:10:47.715112078Z level=info msg=starting first_tick=2026-10-25T13:10:50Z
+grafana-1  | logger=provisioning.dashboard t=2026-10-25T13:10:47.743666853Z level=info msg="starting to provision dashboards"
+grafana-1  | logger=folder-service t=2026-10-25T13:10:47.74664028Z level=warn msg="User does not belong to a user or service account namespace, using 0 as user ID" id=:0
+grafana-1  | logger=folder-service t=2026-10-25T13:10:47.750707203Z level=warn msg="User does not belong to a user or service account namespace, using 0 as user ID" id=:0
+grafana-1  | logger=sqlstore.transactions t=2026-10-25T13:10:47.809158215Z level=info msg="Database locked, sleeping then retrying" error="database is locked" retry=0 code="database is locked"
+grafana-1  | logger=sqlstore.transactions t=2026-10-25T13:10:47.821648691Z level=info msg="Database locked, sleeping then retrying" error="database is locked" retry=1 code="database is locked"
+grafana-1  | logger=grafana.update.checker t=2026-10-25T13:10:47.833133146Z level=info msg="Update check succeeded" duration=118.662273ms
+grafana-1  | logger=plugins.update.checker t=2026-10-25T13:10:47.845252774Z level=info msg="Update check succeeded" duration=130.668178ms
+grafana-1  | logger=sqlstore.transactions t=2026-10-25T13:10:47.851808715Z level=info msg="Database locked, sleeping then retrying" error="database is locked" retry=0 code="database is locked"
+grafana-1  | logger=provisioning.dashboard t=2026-10-25T13:10:47.868719073Z level=info msg="finished to provision dashboards"
+grafana-1  | logger=plugin.angulardetectorsprovider.dynamic t=2026-10-25T13:10:47.891665872Z level=info msg="Patterns update finished" duration=99.539436ms
+grafana-1  | logger=grafana-apiserver t=2026-10-25T13:10:48.285607343Z level=info msg="Adding GroupVersion playlist.grafana.app v0alpha1 to ResourceManager"
+grafana-1  | logger=grafana-apiserver t=2026-10-25T13:10:48.28645379Z level=info msg="Adding GroupVersion featuretoggle.grafana.app v0alpha1 to ResourceManager"
+grafana-1  | logger=infra.usagestats t=2026-10-25T13:11:53.720959204Z level=info msg="Usage stats are ready to report"
+grafana-1  | logger=context userId=0 orgId=1 uname= t=2026-10-25T13:15:30.004922875Z level=info msg="Request Completed" method=GET path=/api/live/ws status=-1 remote_addr=172.18.0.1 time_ms=2 duration=2.665037ms size=0 referer= handler=/api/live/ws status_source=server
+grafana-1  | logger=live t=2026-10-25T13:15:30.443837497Z level=info msg="Initialized channel handler" channel=grafana/dashboard/uid/piggymetrics address=grafana/dashboard/uid/piggymetrics
+grafana-1  | logger=context userId=0 orgId=1 uname= t=2026-10-25T13:17:48.222320249Z level=info msg="Request Completed" method=GET path=/api/live/ws status=-1 remote_addr=172.18.0.1 time_ms=2 duration=2.207101ms size=0 referer= handler=/api/live/ws status_source=server

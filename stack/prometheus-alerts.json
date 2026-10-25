@@ -1,0 +1,1 @@
+{"status":"success","data":{"alerts":[{"labels":{"alertname":"ServiceDown","instance":"statistics-service:7000","job":"statistics-service","severity":"critical"},"annotations":{"summary":"statistics-service ne répond plus"},"state":"firing","activeAt":"2026-10-25T13:16:31.090215511Z","value":"0e+00"}]}}

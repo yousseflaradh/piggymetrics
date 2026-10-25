@@ -1,0 +1,11 @@
+piggymetrics-turbine-stream-service:ci 310MB
+piggymetrics-monitoring:ci 297MB
+piggymetrics-notification-service:ci 320MB
+piggymetrics-statistics-service:ci 319MB
+piggymetrics-account-service:ci 320MB
+piggymetrics-auth-service:ci 314MB
+piggymetrics-gateway:ci 308MB
+piggymetrics-registry:ci 309MB
+piggymetrics-config:ci 292MB
+piggymetrics-account-service:original-java8jre 367MB
+sqshq/piggymetrics-account-service:latest 367MB

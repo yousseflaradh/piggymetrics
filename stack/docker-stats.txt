@@ -1,0 +1,16 @@
+piggymetrics-gateway-1 364.1MiB / 15.61GiB 0.16%
+piggymetrics-monitoring-1 262.6MiB / 15.61GiB 0.08%
+piggymetrics-statistics-service-1 381.9MiB / 15.61GiB 0.12%
+piggymetrics-turbine-stream-service-1 323MiB / 15.61GiB 0.08%
+piggymetrics-account-service-1 399.5MiB / 15.61GiB 3.90%
+piggymetrics-auth-service-1 349.4MiB / 15.61GiB 0.15%
+piggymetrics-notification-service-1 399.4MiB / 15.61GiB 0.12%
+piggymetrics-registry-1 332.4MiB / 15.61GiB 0.60%
+piggymetrics-grafana-1 66.62MiB / 15.61GiB 0.05%
+piggymetrics-account-mongodb-1 46.11MiB / 15.61GiB 0.18%
+piggymetrics-auth-mongodb-1 45.02MiB / 15.61GiB 0.17%
+piggymetrics-notification-mongodb-1 46.62MiB / 15.61GiB 0.18%
+piggymetrics-statistics-mongodb-1 48.88MiB / 15.61GiB 0.25%
+piggymetrics-config-1 294MiB / 15.61GiB 0.08%
+piggymetrics-rabbitmq-1 143.9MiB / 15.61GiB 0.10%
+piggymetrics-prometheus-1 24.25MiB / 15.61GiB 0.17%

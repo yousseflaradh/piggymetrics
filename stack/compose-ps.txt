@@ -1,0 +1,17 @@
+NAME                                    IMAGE                                       COMMAND                  SERVICE                  CREATED         STATUS                   PORTS
+piggymetrics-account-mongodb-1          sqshq/piggymetrics-mongodb                  "/initx.sh"              account-mongodb          4 minutes ago   Up 4 minutes             27017/tcp
+piggymetrics-account-service-1          sqshq/piggymetrics-account-service          "/__cacert_entrypoin…"   account-service          4 minutes ago   Up 3 minutes             6000/tcp
+piggymetrics-auth-mongodb-1             sqshq/piggymetrics-mongodb                  "/initx.sh"              auth-mongodb             4 minutes ago   Up 4 minutes             27017/tcp
+piggymetrics-auth-service-1             sqshq/piggymetrics-auth-service             "/__cacert_entrypoin…"   auth-service             4 minutes ago   Up 3 minutes             5000/tcp
+piggymetrics-config-1                   sqshq/piggymetrics-config                   "/__cacert_entrypoin…"   config                   4 minutes ago   Up 4 minutes (healthy)   8888/tcp
+piggymetrics-gateway-1                  sqshq/piggymetrics-gateway                  "/__cacert_entrypoin…"   gateway                  4 minutes ago   Up 3 minutes             0.0.0.0:80->4000/tcp, [::]:80->4000/tcp
+piggymetrics-grafana-1                  grafana/grafana:11.2.0                      "/run.sh"                grafana                  4 minutes ago   Up 4 minutes             0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+piggymetrics-monitoring-1               sqshq/piggymetrics-monitoring               "/__cacert_entrypoin…"   monitoring               4 minutes ago   Up 3 minutes             0.0.0.0:9000->8080/tcp, [::]:9000->8080/tcp
+piggymetrics-notification-mongodb-1     sqshq/piggymetrics-mongodb                  "/initx.sh"              notification-mongodb     4 minutes ago   Up 4 minutes             27017/tcp
+piggymetrics-notification-service-1     sqshq/piggymetrics-notification-service     "/__cacert_entrypoin…"   notification-service     4 minutes ago   Up 3 minutes             8000/tcp
+piggymetrics-prometheus-1               prom/prometheus:v2.53.2                     "/bin/prometheus --c…"   prometheus               4 minutes ago   Up 4 minutes             0.0.0.0:9090->9090/tcp, [::]:9090->9090/tcp
+piggymetrics-rabbitmq-1                 rabbitmq:3-management                       "docker-entrypoint.s…"   rabbitmq                 4 minutes ago   Up 4 minutes             4369/tcp, 5671-5672/tcp, 15671/tcp, 15691-15692/tcp, 25672/tcp, 0.0.0.0:15672->15672/tcp, [::]:15672->15672/tcp
+piggymetrics-registry-1                 sqshq/piggymetrics-registry                 "/__cacert_entrypoin…"   registry                 4 minutes ago   Up 3 minutes             0.0.0.0:8761->8761/tcp, [::]:8761->8761/tcp
+piggymetrics-statistics-mongodb-1       sqshq/piggymetrics-mongodb                  "/initx.sh"              statistics-mongodb       4 minutes ago   Up 4 minutes             27017/tcp
+piggymetrics-statistics-service-1       sqshq/piggymetrics-statistics-service       "/__cacert_entrypoin…"   statistics-service       4 minutes ago   Up 3 minutes             7000/tcp
+piggymetrics-turbine-stream-service-1   sqshq/piggymetrics-turbine-stream-service   "/__cacert_entrypoin…"   turbine-stream-service   4 minutes ago   Up 3 minutes             0.0.0.0:8989->8989/tcp, [::]:8989->8989/tcp

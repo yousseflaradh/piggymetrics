@@ -1,0 +1,14 @@
+| Target | Critical | High | Medium | Low |
+| --- | --- | --- | --- | --- |
+| config | 0 | 21 | 0 | 20 |
+| fs | 729 | 2279 | 1801 | 271 |
+| piggymetrics-account-service_ci | 44 | 142 | 182 | 21 |
+| piggymetrics-account-service_original-java8jre | 120 | 301 | 293 | 81 |
+| piggymetrics-auth-service_ci | 44 | 138 | 169 | 20 |
+| piggymetrics-config_ci | 39 | 101 | 131 | 17 |
+| piggymetrics-gateway_ci | 37 | 133 | 163 | 20 |
+| piggymetrics-monitoring_ci | 35 | 98 | 127 | 19 |
+| piggymetrics-notification-service_ci | 44 | 142 | 181 | 21 |
+| piggymetrics-registry_ci | 38 | 132 | 161 | 20 |
+| piggymetrics-statistics-service_ci | 44 | 142 | 181 | 21 |
+| piggymetrics-turbine-stream-service_ci | 29 | 117 | 162 | 18 |

@@ -1,0 +1,40 @@
+[WARNING] 13:12:51.793   * statistics-service/src/test/java/com/piggymetrics/statistics/StatisticsServiceApplicationTests.java
+[WARNING] 13:12:51.793   * notification-service/src/main/java/com/piggymetrics/notification/domain/Frequency.java
+[WARNING] 13:12:51.793   * account-service/src/main/java/com/piggymetrics/account/domain/Saving.java
+[WARNING] 13:12:51.793   * notification-service/src/main/java/com/piggymetrics/notification/domain/NotificationSettings.java
+[WARNING] 13:12:51.793   * account-service/src/main/java/com/piggymetrics/account/controller/AccountController.java
+[WARNING] 13:12:51.793   * statistics-service/src/main/java/com/piggymetrics/statistics/domain/timeseries/StatisticMetric.java
+[WARNING] 13:12:51.793   * statistics-service/src/main/java/com/piggymetrics/statistics/repository/DataPointRepository.java
+[WARNING] 13:12:51.793   * notification-service/src/main/java/com/piggymetrics/notification/service/EmailServiceImpl.java
+[WARNING] 13:12:51.793   * auth-service/pom.xml
+[WARNING] 13:12:51.793 This may lead to missing/broken features in SonarQube
+[INFO] 13:12:51.800 CPD Executor 38 files had no CPD blocks
+[INFO] 13:12:51.800 CPD Executor Calculating CPD for 35 files
+[INFO] 13:12:51.823 CPD Executor CPD calculation finished (done) | time=22ms
+[INFO] 13:12:51.826 SCM revision ID '77bc165b2a049a7695a0678b9aa8af24a581c0ce'
+[INFO] 13:12:51.938 Analysis report generated in 95ms, dir size=570.6 kB
+[INFO] 13:12:52.068 Analysis report compressed in 129ms, zip size=247.6 kB
+[INFO] 13:12:52.396 Analysis report uploaded in 327ms
+[INFO] 13:12:52.397 ------------- Check Quality Gate status
+[INFO] 13:12:52.398 Waiting for the analysis report to be processed (max 300s)
+[INFO] 13:13:12.506 QUALITY GATE STATUS: PASSED - View details on http://localhost:9000/dashboard?id=piggymetrics
+[INFO] 13:13:12.550 Analysis total time: 35.811 s
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] config 1.0.0-SNAPSHOT .............................. SKIPPED
+[INFO] monitoring 0.0.1-SNAPSHOT .......................... SKIPPED
+[INFO] registry 0.0.1-SNAPSHOT ............................ SKIPPED
+[INFO] gateway 1.0-SNAPSHOT ............................... SKIPPED
+[INFO] auth-service 1.0-SNAPSHOT .......................... SKIPPED
+[INFO] account-service 1.0-SNAPSHOT ....................... SKIPPED
+[INFO] statistics-service 1.0-SNAPSHOT .................... SKIPPED
+[INFO] notification-service 1.0.0-SNAPSHOT ................ SKIPPED
+[INFO] turbine-stream-service 0.0.1-SNAPSHOT .............. SKIPPED
+[INFO] piggymetrics 1.0-SNAPSHOT .......................... SUCCESS [ 41.011 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  41.588 s
+[INFO] Finished at: 2026-10-25T13:13:12Z
+[INFO] ------------------------------------------------------------------------

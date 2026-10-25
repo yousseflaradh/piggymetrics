@@ -1,0 +1,9 @@
+| Module | Tests | Failures | Errors | Skipped |
+| --- | --- | --- | --- | --- |
+| account-service | 14 | 0 | 0 | 0 |
+| auth-service | 9 | 0 | 0 | 0 |
+| gateway | 2 | 0 | 0 | 0 |
+| monitoring | 1 | 0 | 0 | 0 |
+| notification-service | 18 | 0 | 0 | 0 |
+| statistics-service | 16 | 0 | 2 | 0 |
+| turbine-stream-service | 1 | 0 | 0 | 0 |

@@ -1,0 +1,153 @@
+time="2026-10-25T13:18:03Z" level=warning msg="/home/runner/work/piggymetrics/piggymetrics/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-10-25T13:18:03Z" level=warning msg="/home/runner/work/piggymetrics/piggymetrics/docker-compose.ci.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+time="2026-10-25T13:18:03Z" level=warning msg="/home/runner/work/piggymetrics/piggymetrics/docker-compose.observability.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+account-mongodb-1  | 2026-10-25T13:10:43.741+0000 I CONTROL  [initandlisten] git version: 1cd2db51dce4b16f4bc97a75056269df0dc0bddb
+account-mongodb-1  | 2026-10-25T13:10:43.741+0000 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.2g  1 Mar 2016
+account-mongodb-1  | 2026-10-25T13:10:43.741+0000 I CONTROL  [initandlisten] allocator: tcmalloc
+account-mongodb-1  | 2026-10-25T13:10:43.741+0000 I CONTROL  [initandlisten] modules: none
+account-mongodb-1  | 2026-10-25T13:10:43.741+0000 I CONTROL  [initandlisten] build environment:
+account-mongodb-1  | 2026-10-25T13:10:43.741+0000 I CONTROL  [initandlisten]     distmod: ubuntu1604
+account-mongodb-1  | 2026-10-25T13:10:43.741+0000 I CONTROL  [initandlisten]     distarch: x86_64
+account-mongodb-1  | 2026-10-25T13:10:43.741+0000 I CONTROL  [initandlisten]     target_arch: x86_64
+account-mongodb-1  | 2026-10-25T13:10:43.741+0000 I CONTROL  [initandlisten] options: {}
+account-mongodb-1  | 2026-10-25T13:10:43.745+0000 I STORAGE  [initandlisten] 
+account-mongodb-1  | 2026-10-25T13:10:43.745+0000 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+account-mongodb-1  | 2026-10-25T13:10:43.745+0000 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+account-mongodb-1  | 2026-10-25T13:10:43.745+0000 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=7482M,cache_overflow=(file_max=0M),session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),compatibility=(release="3.0",require_max="3.0"),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+account-mongodb-1  | MongoDB shell version v3.6.21
+account-mongodb-1  | exception: connect failed
+account-mongodb-1  | connecting to: mongodb://127.0.0.1:27017/piggymetrics?gssapiServiceName=mongodb
+account-mongodb-1  | 2026-10-25T13:10:43.879+0000 W NETWORK  [thread1] Failed to connect to 127.0.0.1:27017, in(checking socket for error after poll), reason: Connection refused
+account-mongodb-1  | 2026-10-25T13:10:43.879+0000 E QUERY    [thread1] Error: couldn't connect to server 127.0.0.1:27017, connection attempt failed :
+account-mongodb-1  | connect@src/mongo/shell/mongo.js:275:13
+account-mongodb-1  | @(connect):1:6
+account-mongodb-1  | MongoDB shell version v3.6.21
+account-mongodb-1  | connecting to: mongodb://127.0.0.1:27017/piggymetrics?gssapiServiceName=mongodb
+account-mongodb-1  | 2026-10-25T13:10:43.972+0000 W NETWORK  [thread1] Failed to connect to 127.0.0.1:27017, in(checking socket for error after poll), reason: Connection refused
+account-mongodb-1  | 2026-10-25T13:10:43.973+0000 E QUERY    [thread1] Error: couldn't connect to server 127.0.0.1:27017, connection attempt failed :
+account-mongodb-1  | connect@src/mongo/shell/mongo.js:275:13
+account-mongodb-1  | @(connect):1:6
+account-mongodb-1  | exception: connect failed
+account-mongodb-1  | connecting to: mongodb://127.0.0.1:27017/piggymetrics?gssapiServiceName=mongodb
+account-mongodb-1  | 2026-10-25T13:10:44.067+0000 W NETWORK  [thread1] Failed to connect to 127.0.0.1:27017, in(checking socket for error after poll), reason: Connection refused
+account-mongodb-1  | 2026-10-25T13:10:44.067+0000 E QUERY    [thread1] Error: couldn't connect to server 127.0.0.1:27017, connection attempt failed :
+account-mongodb-1  | connect@src/mongo/shell/mongo.js:275:13
+account-mongodb-1  | @(connect):1:6
+account-mongodb-1  | exception: connect failed
+account-mongodb-1  | 2026-10-25T13:10:44.501+0000 I STORAGE  [initandlisten] WiredTiger message [1792933844:501451][11:0x7ff58d326a40], txn-recover: Set global recovery timestamp: 0
+account-mongodb-1  | 2026-10-25T13:10:44.519+0000 I CONTROL  [initandlisten] 
+account-mongodb-1  | 2026-10-25T13:10:44.519+0000 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+account-mongodb-1  | 2026-10-25T13:10:44.519+0000 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+account-mongodb-1  | 2026-10-25T13:10:44.520+0000 I CONTROL  [initandlisten] 
+account-mongodb-1  | 2026-10-25T13:10:44.520+0000 I CONTROL  [initandlisten] ** WARNING: This server is bound to localhost.
+account-mongodb-1  | 2026-10-25T13:10:44.520+0000 I CONTROL  [initandlisten] **          Remote systems will be unable to connect to this server. 
+account-mongodb-1  | 2026-10-25T13:10:44.520+0000 I CONTROL  [initandlisten] **          Start the server with --bind_ip <address> to specify which IP 
+account-mongodb-1  | 2026-10-25T13:10:44.520+0000 I CONTROL  [initandlisten] **          addresses it should serve responses from, or with --bind_ip_all to
+account-mongodb-1  | 2026-10-25T13:10:44.520+0000 I CONTROL  [initandlisten] **          bind to all interfaces. If this behavior is desired, start the
+account-mongodb-1  | 2026-10-25T13:10:44.520+0000 I CONTROL  [initandlisten] **          server with --bind_ip 127.0.0.1 to disable this warning.
+account-mongodb-1  | 2026-10-25T13:10:44.520+0000 I CONTROL  [initandlisten] 
+account-mongodb-1  | 2026-10-25T13:10:44.522+0000 I CONTROL  [initandlisten] 
+account-mongodb-1  | 2026-10-25T13:10:44.522+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+account-mongodb-1  | 2026-10-25T13:10:44.522+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+account-mongodb-1  | 2026-10-25T13:10:44.522+0000 I CONTROL  [initandlisten] 
+account-mongodb-1  | 2026-10-25T13:10:44.523+0000 I STORAGE  [initandlisten] createCollection: admin.system.version with provided UUID: 29f906ce-0f4f-49ae-b7d3-fb8d8854d1bc
+account-mongodb-1  | 2026-10-25T13:10:44.530+0000 I COMMAND  [initandlisten] setting featureCompatibilityVersion to 3.6
+account-mongodb-1  | 2026-10-25T13:10:44.531+0000 I STORAGE  [initandlisten] createCollection: local.startup_log with generated UUID: 4d0a984d-249a-4b5b-aa25-c6272b6e7758
+account-mongodb-1  | 2026-10-25T13:10:44.544+0000 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/data/db/diagnostic.data'
+account-mongodb-1  | 2026-10-25T13:10:44.545+0000 I STORAGE  [LogicalSessionCacheRefresh] createCollection: config.system.sessions with generated UUID: 2bcf471d-8d79-40aa-85c1-52790b000ac5
+account-mongodb-1  | 2026-10-25T13:10:44.545+0000 I NETWORK  [initandlisten] listening via socket bound to 127.0.0.1
+account-mongodb-1  | 2026-10-25T13:10:44.545+0000 I NETWORK  [initandlisten] listening via socket bound to /tmp/mongodb-27017.sock
+account-mongodb-1  | 2026-10-25T13:10:44.545+0000 I NETWORK  [initandlisten] waiting for connections on port 27017
+account-mongodb-1  | 2026-10-25T13:10:44.561+0000 I INDEX    [LogicalSessionCacheRefresh] build index on: config.system.sessions properties: { v: 2, key: { lastUse: 1 }, name: "lsidTTLIndex", ns: "config.system.sessions", expireAfterSeconds: 1800 }
+account-mongodb-1  | 2026-10-25T13:10:44.562+0000 I INDEX    [LogicalSessionCacheRefresh] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+account-mongodb-1  | 2026-10-25T13:10:44.565+0000 I INDEX    [LogicalSessionCacheRefresh] build index done.  scanned 0 total records. 0 secs
+account-mongodb-1  | MongoDB shell version v3.6.21
+account-mongodb-1  | connecting to: mongodb://127.0.0.1:27017/piggymetrics?gssapiServiceName=mongodb
+account-mongodb-1  | 2026-10-25T13:10:49.051+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:54736 #1 (1 connection now open)
+account-mongodb-1  | 2026-10-25T13:10:49.051+0000 I NETWORK  [conn1] received client metadata from 127.0.0.1:54736 conn1: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.21" }, os: { type: "Linux", name: "Ubuntu", architecture: "x86_64", version: "16.04" } }
+account-mongodb-1  | 2026-10-25T13:10:49.051+0000 I ACCESS   [conn1] SCRAM-SHA-1 authentication failed for user on piggymetrics from client 127.0.0.1:54736 ; UserNotFound: Could not find user user@piggymetrics
+account-mongodb-1  | 2026-10-25T13:10:49.055+0000 I NETWORK  [conn1] end connection 127.0.0.1:54736 (0 connections now open)
+account-mongodb-1  | 2026-10-25T13:10:49.055+0000 E QUERY    [thread1] Error: Authentication failed. :
+account-mongodb-1  | connect@src/mongo/shell/mongo.js:275:13
+account-mongodb-1  | @(connect):1:6
+account-mongodb-1  | exception: connect failed
+account-mongodb-1  | MongoDB shell version v3.6.21
+account-mongodb-1  | connecting to: mongodb://127.0.0.1:27017/piggymetrics?gssapiServiceName=mongodb
+account-mongodb-1  | 2026-10-25T13:10:49.255+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:54748 #2 (1 connection now open)
+account-mongodb-1  | 2026-10-25T13:10:49.259+0000 I NETWORK  [conn2] received client metadata from 127.0.0.1:54748 conn2: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.21" }, os: { type: "Linux", name: "Ubuntu", architecture: "x86_64", version: "16.04" } }
+account-mongodb-1  | Implicit session: session { "id" : UUID("b6815398-7202-41ee-b69f-458ac0abd9d8") }
+account-mongodb-1  | MongoDB server version: 3.6.21
+account-mongodb-1  | 2026-10-25T13:10:49.282+0000 I STORAGE  [conn2] createCollection: admin.system.users with generated UUID: d7b9a099-5cc9-4d61-9d83-d322f077838e
+account-mongodb-1  | Successfully added user: {
+account-mongodb-1  | 	"user" : "user",
+account-mongodb-1  | 	"roles" : [
+account-mongodb-1  | 		{
+account-mongodb-1  | 			"role" : "readWrite",
+account-mongodb-1  | 			"db" : "piggymetrics"
+account-mongodb-1  | 		}
+account-mongodb-1  | 	]
+account-mongodb-1  | }
+account-mongodb-1  | 2026-10-25T13:10:49.291+0000 I NETWORK  [conn2] end connection 127.0.0.1:54748 (0 connections now open)
+account-mongodb-1  | 2026-10-25T13:10:49.296+0000 I CONTROL  [signalProcessingThread] got signal 15 (Terminated), will terminate after current cmd ends
+account-mongodb-1  | 2026-10-25T13:10:49.297+0000 I NETWORK  [signalProcessingThread] shutdown: going to close listening sockets...
+account-mongodb-1  | 2026-10-25T13:10:49.298+0000 I NETWORK  [signalProcessingThread] removing socket file: /tmp/mongodb-27017.sock
+account-mongodb-1  | 2026-10-25T13:10:49.298+0000 I FTDC     [signalProcessingThread] Shutting down full-time diagnostic data capture
+account-mongodb-1  | 2026-10-25T13:10:49.300+0000 I STORAGE  [signalProcessingThread] WiredTigerKVEngine shutting down
+account-mongodb-1  | 2026-10-25T13:10:49.346+0000 I STORAGE  [signalProcessingThread] shutdown: removing fs lock...
+account-mongodb-1  | 2026-10-25T13:10:49.346+0000 I CONTROL  [signalProcessingThread] now exiting
+account-mongodb-1  | 2026-10-25T13:10:49.346+0000 I CONTROL  [signalProcessingThread] shutting down with code:0
+account-mongodb-1  | restarting with auth on
+account-mongodb-1  | mongod: no process found
+account-mongodb-1  | MongoDB shell version v3.6.21
+account-mongodb-1  | connecting to: mongodb://127.0.0.1:27017/piggymetrics?gssapiServiceName=mongodb
+account-mongodb-1  | 2026-10-25T13:10:54.113+0000 W NETWORK  [thread1] Failed to connect to 127.0.0.1:27017, in(checking socket for error after poll), reason: Connection refused
+account-mongodb-1  | 2026-10-25T13:10:54.113+0000 E QUERY    [thread1] Error: couldn't connect to server 127.0.0.1:27017, connection attempt failed :
+account-mongodb-1  | connect@src/mongo/shell/mongo.js:275:13
+account-mongodb-1  | @(connect):1:6
+account-mongodb-1  | exception: connect failed
+account-mongodb-1  | 2026-10-25T13:10:54.376+0000 I CONTROL  [initandlisten] MongoDB starting : pid=1 port=27017 dbpath=/data/db 64-bit host=2c00abfcf22e
+account-mongodb-1  | 2026-10-25T13:10:54.376+0000 I CONTROL  [initandlisten] db version v3.6.21
+account-mongodb-1  | 2026-10-25T13:10:54.376+0000 I CONTROL  [initandlisten] git version: 1cd2db51dce4b16f4bc97a75056269df0dc0bddb
+account-mongodb-1  | 2026-10-25T13:10:54.376+0000 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.2g  1 Mar 2016
+account-mongodb-1  | 2026-10-25T13:10:54.376+0000 I CONTROL  [initandlisten] allocator: tcmalloc
+account-mongodb-1  | 2026-10-25T13:10:54.376+0000 I CONTROL  [initandlisten] modules: none
+account-mongodb-1  | 2026-10-25T13:10:54.376+0000 I CONTROL  [initandlisten] build environment:
+account-mongodb-1  | 2026-10-25T13:10:54.376+0000 I CONTROL  [initandlisten]     distmod: ubuntu1604
+account-mongodb-1  | 2026-10-25T13:10:54.376+0000 I CONTROL  [initandlisten]     distarch: x86_64
+account-mongodb-1  | 2026-10-25T13:10:54.376+0000 I CONTROL  [initandlisten]     target_arch: x86_64
+account-mongodb-1  | 2026-10-25T13:10:54.376+0000 I CONTROL  [initandlisten] options: { net: { bindIpAll: true }, security: { authorization: "enabled" } }
+account-mongodb-1  | 2026-10-25T13:10:54.377+0000 I -        [initandlisten] Detected data files in /data/db created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.
+account-mongodb-1  | 2026-10-25T13:10:54.377+0000 I STORAGE  [initandlisten] 
+account-mongodb-1  | 2026-10-25T13:10:54.377+0000 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+account-mongodb-1  | 2026-10-25T13:10:54.377+0000 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+account-mongodb-1  | 2026-10-25T13:10:54.377+0000 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=7482M,cache_overflow=(file_max=0M),session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),compatibility=(release="3.0",require_max="3.0"),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+account-mongodb-1  | 2026-10-25T13:10:54.721+0000 I STORAGE  [initandlisten] WiredTiger message [1792933854:721790][1:0x7f4a7ae4da40], txn-recover: Main recovery loop: starting at 1/26752
+account-mongodb-1  | 2026-10-25T13:10:54.759+0000 I STORAGE  [initandlisten] WiredTiger message [1792933854:759207][1:0x7f4a7ae4da40], txn-recover: Recovering log 1 through 2
+account-mongodb-1  | 2026-10-25T13:10:54.779+0000 I STORAGE  [initandlisten] WiredTiger message [1792933854:779853][1:0x7f4a7ae4da40], txn-recover: Recovering log 2 through 2
+account-mongodb-1  | 2026-10-25T13:10:54.798+0000 I STORAGE  [initandlisten] WiredTiger message [1792933854:798809][1:0x7f4a7ae4da40], txn-recover: Set global recovery timestamp: 0
+account-mongodb-1  | 2026-10-25T13:10:54.804+0000 I CONTROL  [initandlisten] 
+account-mongodb-1  | 2026-10-25T13:10:54.804+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+account-mongodb-1  | 2026-10-25T13:10:54.804+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+account-mongodb-1  | 2026-10-25T13:10:54.804+0000 I CONTROL  [initandlisten] 
+account-mongodb-1  | 2026-10-25T13:10:54.807+0000 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/data/db/diagnostic.data'
+account-mongodb-1  | 2026-10-25T13:10:54.807+0000 I NETWORK  [initandlisten] listening via socket bound to 0.0.0.0
+account-mongodb-1  | 2026-10-25T13:10:54.807+0000 I NETWORK  [initandlisten] listening via socket bound to /tmp/mongodb-27017.sock
+account-mongodb-1  | 2026-10-25T13:10:54.807+0000 I NETWORK  [initandlisten] waiting for connections on port 27017
+account-mongodb-1  | MongoDB shell version v3.6.21
+account-mongodb-1  | connecting to: mongodb://127.0.0.1:27017/piggymetrics?gssapiServiceName=mongodb
+account-mongodb-1  | 2026-10-25T13:10:59.153+0000 I NETWORK  [listener] connection accepted from 127.0.0.1:35836 #1 (1 connection now open)
+account-mongodb-1  | 2026-10-25T13:10:59.154+0000 I NETWORK  [conn1] received client metadata from 127.0.0.1:35836 conn1: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.21" }, os: { type: "Linux", name: "Ubuntu", architecture: "x86_64", version: "16.04" } }
+account-mongodb-1  | 2026-10-25T13:10:59.161+0000 I ACCESS   [conn1] Successfully authenticated as principal user on piggymetrics from client 127.0.0.1:35836
+account-mongodb-1  | Implicit session: session { "id" : UUID("752dbc75-b96d-4d9c-9a0a-fefbcca1e88d") }
+account-mongodb-1  | MongoDB server version: 3.6.21
+account-mongodb-1  | 2026-10-25T13:10:59.163+0000 I ACCESS   [conn1] Successfully authenticated as principal user on piggymetrics from client 127.0.0.1:35836
+account-mongodb-1  | dump start
+account-mongodb-1  | 2026-10-25T13:10:59.164+0000 I STORAGE  [conn1] createCollection: piggymetrics.accounts with generated UUID: ce523205-1e9b-4cb5-a5d3-492ca0700eab
+account-mongodb-1  | dump complete
+account-mongodb-1  | 2026-10-25T13:10:59.169+0000 I NETWORK  [conn1] end connection 127.0.0.1:35836 (0 connections now open)
+account-mongodb-1  | 2026-10-25T13:12:04.577+0000 I NETWORK  [listener] connection accepted from 172.18.0.16:56628 #2 (1 connection now open)
+account-mongodb-1  | 2026-10-25T13:12:04.674+0000 I NETWORK  [conn2] received client metadata from 172.18.0.16:56628 conn2: { driver: { name: "mongo-java-driver", version: "unknown" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.17.0-1022-azure" }, platform: "Java/Temurin/1.8.0_504-b01" }
+account-mongodb-1  | 2026-10-25T13:12:05.529+0000 I ACCESS   [conn2] Successfully authenticated as principal user on piggymetrics from client 172.18.0.16:56628
+account-mongodb-1  | 2026-10-25T13:13:18.240+0000 I NETWORK  [listener] connection accepted from 172.18.0.16:44440 #3 (2 connections now open)
+account-mongodb-1  | 2026-10-25T13:13:18.240+0000 I NETWORK  [conn3] received client metadata from 172.18.0.16:44440 conn3: { driver: { name: "mongo-java-driver", version: "unknown" }, os: { type: "Linux", name: "Linux", architecture: "amd64", version: "6.17.0-1022-azure" }, platform: "Java/Temurin/1.8.0_504-b01" }
+account-mongodb-1  | 2026-10-25T13:13:18.270+0000 I ACCESS   [conn3] Successfully authenticated as principal user on piggymetrics from client 172.18.0.16:44440

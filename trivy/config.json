@@ -1,0 +1,1404 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.76.1"
+  },
+  "ReportID": "01a17331-281e-7810-8507-56a42bdaee1e",
+  "CreatedAt": "2026-10-25T13:12:43.806531512Z",
+  "ArtifactID": "sha256:83d96709d56ef12bfa7fa993933ec939e8d44075aa57451678ebd269a1c45530",
+  "ArtifactName": "/src",
+  "ArtifactType": "repository",
+  "Metadata": {
+    "RepoURL": "https://github.com/yousseflaradh/piggymetrics",
+    "Branch": "master",
+    "Commit": "77bc165b2a049a7695a0678b9aa8af24a581c0ce",
+    "CommitMsg": "Fix monitoring gaps found in the first full run\n\n- auth-service: let Prometheus read /actuator/prometheus (was HTTP 401)\n- turbine-stream-service: scrape port 8080, where Netty actually listens\n- report: SonarQube screenshots without login, Trivy reuses the Maven\n  cache (Maven Central answered 429), alert test watches the stopped service\n\nCo-Authored-By: Claude Opus 5.5 \u003cnoreply@anthropic.com\u003e\nClaude-Session: https://claude.ai/code/session_01CBiTqnuNzhN7KgX8z7QgJM",
+    "Author": "Youssef Laradh \u003cyoussef.laradh@gmail.com\u003e",
+    "Committer": "Youssef Laradh \u003cyoussef.laradh@gmail.com\u003e"
+  },
+  "Results": [
+    {
+      "Target": "account-service/Dockerfile",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 23,
+        "Failures": 4
+      },
+      "Misconfigurations": [
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0002",
+          "Title": "Image user should not be 'root'",
+          "Description": "Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.",
+          "Message": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+          "Namespace": "builtin.dockerfile.DS002",
+          "Query": "data.builtin.dockerfile.DS002.deny",
+          "Resolution": "Add 'USER \u003cnon root user name\u003e' line to the Dockerfile",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0002",
+          "References": [
+            "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+            "https://avd.aquasec.com/misconfig/ds-0002"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0005",
+          "Title": "ADD instead of COPY",
+          "Description": "You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.",
+          "Message": "Consider using 'COPY ./target/account-service.jar /app/' command instead of 'ADD ./target/account-service.jar /app/'",
+          "Namespace": "builtin.dockerfile.DS005",
+          "Query": "data.builtin.dockerfile.DS005.deny",
+          "Resolution": "Use COPY instead of ADD",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0005",
+          "References": [
+            "https://docs.docker.com/engine/reference/builder/#add",
+            "https://avd.aquasec.com/misconfig/ds-0005"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 4,
+            "EndLine": 4,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 4,
+                  "Content": "ADD ./target/account-service.jar /app/",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mADD\u001b[0m ./target/account-service.jar /app/",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0022",
+          "Title": "Deprecated MAINTAINER used",
+          "Description": "MAINTAINER has been deprecated since Docker 1.13.0.",
+          "Message": "MAINTAINER should not be used: 'MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e'",
+          "Namespace": "builtin.dockerfile.DS022",
+          "Query": "data.builtin.dockerfile.DS022.deny",
+          "Resolution": "Use LABEL instead of MAINTAINER",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0022",
+          "References": [
+            "https://docs.docker.com/engine/deprecated/#maintainer-in-dockerfile",
+            "https://avd.aquasec.com/misconfig/ds-0022"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 2,
+            "EndLine": 2,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 2,
+                  "Content": "MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mMAINTAINER\u001b[0m\u001b[38;5;37m Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e\u001b[0m",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0026",
+          "Title": "No HEALTHCHECK defined",
+          "Description": "You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.",
+          "Message": "Add HEALTHCHECK instruction in your Dockerfile",
+          "Namespace": "builtin.dockerfile.DS026",
+          "Query": "data.builtin.dockerfile.DS026.deny",
+          "Resolution": "Add HEALTHCHECK instruction in Dockerfile",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0026",
+          "References": [
+            "https://blog.aquasec.com/docker-security-best-practices",
+            "https://avd.aquasec.com/misconfig/ds-0026"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        }
+      ]
+    },
+    {
+      "Target": "auth-service/Dockerfile",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 23,
+        "Failures": 4
+      },
+      "Misconfigurations": [
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0002",
+          "Title": "Image user should not be 'root'",
+          "Description": "Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.",
+          "Message": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+          "Namespace": "builtin.dockerfile.DS002",
+          "Query": "data.builtin.dockerfile.DS002.deny",
+          "Resolution": "Add 'USER \u003cnon root user name\u003e' line to the Dockerfile",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0002",
+          "References": [
+            "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+            "https://avd.aquasec.com/misconfig/ds-0002"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0005",
+          "Title": "ADD instead of COPY",
+          "Description": "You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.",
+          "Message": "Consider using 'COPY ./target/auth-service.jar /app/' command instead of 'ADD ./target/auth-service.jar /app/'",
+          "Namespace": "builtin.dockerfile.DS005",
+          "Query": "data.builtin.dockerfile.DS005.deny",
+          "Resolution": "Use COPY instead of ADD",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0005",
+          "References": [
+            "https://docs.docker.com/engine/reference/builder/#add",
+            "https://avd.aquasec.com/misconfig/ds-0005"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 4,
+            "EndLine": 4,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 4,
+                  "Content": "ADD ./target/auth-service.jar /app/",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mADD\u001b[0m ./target/auth-service.jar /app/",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0022",
+          "Title": "Deprecated MAINTAINER used",
+          "Description": "MAINTAINER has been deprecated since Docker 1.13.0.",
+          "Message": "MAINTAINER should not be used: 'MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e'",
+          "Namespace": "builtin.dockerfile.DS022",
+          "Query": "data.builtin.dockerfile.DS022.deny",
+          "Resolution": "Use LABEL instead of MAINTAINER",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0022",
+          "References": [
+            "https://docs.docker.com/engine/deprecated/#maintainer-in-dockerfile",
+            "https://avd.aquasec.com/misconfig/ds-0022"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 2,
+            "EndLine": 2,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 2,
+                  "Content": "MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mMAINTAINER\u001b[0m\u001b[38;5;37m Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e\u001b[0m",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0026",
+          "Title": "No HEALTHCHECK defined",
+          "Description": "You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.",
+          "Message": "Add HEALTHCHECK instruction in your Dockerfile",
+          "Namespace": "builtin.dockerfile.DS026",
+          "Query": "data.builtin.dockerfile.DS026.deny",
+          "Resolution": "Add HEALTHCHECK instruction in Dockerfile",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0026",
+          "References": [
+            "https://blog.aquasec.com/docker-security-best-practices",
+            "https://avd.aquasec.com/misconfig/ds-0026"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        }
+      ]
+    },
+    {
+      "Target": "config/Dockerfile",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 24,
+        "Failures": 3
+      },
+      "Misconfigurations": [
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0002",
+          "Title": "Image user should not be 'root'",
+          "Description": "Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.",
+          "Message": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+          "Namespace": "builtin.dockerfile.DS002",
+          "Query": "data.builtin.dockerfile.DS002.deny",
+          "Resolution": "Add 'USER \u003cnon root user name\u003e' line to the Dockerfile",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0002",
+          "References": [
+            "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+            "https://avd.aquasec.com/misconfig/ds-0002"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0005",
+          "Title": "ADD instead of COPY",
+          "Description": "You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.",
+          "Message": "Consider using 'COPY ./target/config.jar /app/' command instead of 'ADD ./target/config.jar /app/'",
+          "Namespace": "builtin.dockerfile.DS005",
+          "Query": "data.builtin.dockerfile.DS005.deny",
+          "Resolution": "Use COPY instead of ADD",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0005",
+          "References": [
+            "https://docs.docker.com/engine/reference/builder/#add",
+            "https://avd.aquasec.com/misconfig/ds-0005"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 6,
+            "EndLine": 6,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 6,
+                  "Content": "ADD ./target/config.jar /app/",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mADD\u001b[0m ./target/config.jar /app/",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0022",
+          "Title": "Deprecated MAINTAINER used",
+          "Description": "MAINTAINER has been deprecated since Docker 1.13.0.",
+          "Message": "MAINTAINER should not be used: 'MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e'",
+          "Namespace": "builtin.dockerfile.DS022",
+          "Query": "data.builtin.dockerfile.DS022.deny",
+          "Resolution": "Use LABEL instead of MAINTAINER",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0022",
+          "References": [
+            "https://docs.docker.com/engine/deprecated/#maintainer-in-dockerfile",
+            "https://avd.aquasec.com/misconfig/ds-0022"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 2,
+            "EndLine": 2,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 2,
+                  "Content": "MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mMAINTAINER\u001b[0m\u001b[38;5;37m Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e\u001b[0m",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Target": "gateway/Dockerfile",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 23,
+        "Failures": 4
+      },
+      "Misconfigurations": [
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0002",
+          "Title": "Image user should not be 'root'",
+          "Description": "Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.",
+          "Message": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+          "Namespace": "builtin.dockerfile.DS002",
+          "Query": "data.builtin.dockerfile.DS002.deny",
+          "Resolution": "Add 'USER \u003cnon root user name\u003e' line to the Dockerfile",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0002",
+          "References": [
+            "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+            "https://avd.aquasec.com/misconfig/ds-0002"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0005",
+          "Title": "ADD instead of COPY",
+          "Description": "You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.",
+          "Message": "Consider using 'COPY ./target/gateway.jar /app/' command instead of 'ADD ./target/gateway.jar /app/'",
+          "Namespace": "builtin.dockerfile.DS005",
+          "Query": "data.builtin.dockerfile.DS005.deny",
+          "Resolution": "Use COPY instead of ADD",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0005",
+          "References": [
+            "https://docs.docker.com/engine/reference/builder/#add",
+            "https://avd.aquasec.com/misconfig/ds-0005"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 4,
+            "EndLine": 4,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 4,
+                  "Content": "ADD ./target/gateway.jar /app/",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mADD\u001b[0m ./target/gateway.jar /app/",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0022",
+          "Title": "Deprecated MAINTAINER used",
+          "Description": "MAINTAINER has been deprecated since Docker 1.13.0.",
+          "Message": "MAINTAINER should not be used: 'MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e'",
+          "Namespace": "builtin.dockerfile.DS022",
+          "Query": "data.builtin.dockerfile.DS022.deny",
+          "Resolution": "Use LABEL instead of MAINTAINER",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0022",
+          "References": [
+            "https://docs.docker.com/engine/deprecated/#maintainer-in-dockerfile",
+            "https://avd.aquasec.com/misconfig/ds-0022"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 2,
+            "EndLine": 2,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 2,
+                  "Content": "MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mMAINTAINER\u001b[0m\u001b[38;5;37m Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e\u001b[0m",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0026",
+          "Title": "No HEALTHCHECK defined",
+          "Description": "You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.",
+          "Message": "Add HEALTHCHECK instruction in your Dockerfile",
+          "Namespace": "builtin.dockerfile.DS026",
+          "Query": "data.builtin.dockerfile.DS026.deny",
+          "Resolution": "Add HEALTHCHECK instruction in Dockerfile",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0026",
+          "References": [
+            "https://blog.aquasec.com/docker-security-best-practices",
+            "https://avd.aquasec.com/misconfig/ds-0026"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        }
+      ]
+    },
+    {
+      "Target": "mongodb/Dockerfile",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 22,
+        "Failures": 6
+      },
+      "Misconfigurations": [
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0002",
+          "Title": "Image user should not be 'root'",
+          "Description": "Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.",
+          "Message": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+          "Namespace": "builtin.dockerfile.DS002",
+          "Query": "data.builtin.dockerfile.DS002.deny",
+          "Resolution": "Add 'USER \u003cnon root user name\u003e' line to the Dockerfile",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0002",
+          "References": [
+            "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+            "https://avd.aquasec.com/misconfig/ds-0002"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0005",
+          "Title": "ADD instead of COPY",
+          "Description": "You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.",
+          "Message": "Consider using 'COPY ./dump /' command instead of 'ADD ./dump /'",
+          "Namespace": "builtin.dockerfile.DS005",
+          "Query": "data.builtin.dockerfile.DS005.deny",
+          "Resolution": "Use COPY instead of ADD",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0005",
+          "References": [
+            "https://docs.docker.com/engine/reference/builder/#add",
+            "https://avd.aquasec.com/misconfig/ds-0005"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 5,
+            "EndLine": 5,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 5,
+                  "Content": "ADD ./dump /",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mADD\u001b[0m ./dump /",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0005",
+          "Title": "ADD instead of COPY",
+          "Description": "You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.",
+          "Message": "Consider using 'COPY init.sh /init.sh' command instead of 'ADD init.sh /init.sh'",
+          "Namespace": "builtin.dockerfile.DS005",
+          "Query": "data.builtin.dockerfile.DS005.deny",
+          "Resolution": "Use COPY instead of ADD",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0005",
+          "References": [
+            "https://docs.docker.com/engine/reference/builder/#add",
+            "https://avd.aquasec.com/misconfig/ds-0005"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 4,
+            "EndLine": 4,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 4,
+                  "Content": "ADD init.sh /init.sh",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mADD\u001b[0m init.sh /init.sh",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0022",
+          "Title": "Deprecated MAINTAINER used",
+          "Description": "MAINTAINER has been deprecated since Docker 1.13.0.",
+          "Message": "MAINTAINER should not be used: 'MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e'",
+          "Namespace": "builtin.dockerfile.DS022",
+          "Query": "data.builtin.dockerfile.DS022.deny",
+          "Resolution": "Use LABEL instead of MAINTAINER",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0022",
+          "References": [
+            "https://docs.docker.com/engine/deprecated/#maintainer-in-dockerfile",
+            "https://avd.aquasec.com/misconfig/ds-0022"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 2,
+            "EndLine": 2,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 2,
+                  "Content": "MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mMAINTAINER\u001b[0m\u001b[38;5;37m Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e\u001b[0m",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0026",
+          "Title": "No HEALTHCHECK defined",
+          "Description": "You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.",
+          "Message": "Add HEALTHCHECK instruction in your Dockerfile",
+          "Namespace": "builtin.dockerfile.DS026",
+          "Query": "data.builtin.dockerfile.DS026.deny",
+          "Resolution": "Add HEALTHCHECK instruction in Dockerfile",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0026",
+          "References": [
+            "https://blog.aquasec.com/docker-security-best-practices",
+            "https://avd.aquasec.com/misconfig/ds-0026"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0029",
+          "Title": "'apt-get' missing '--no-install-recommends'",
+          "Description": "'apt-get' install should use '--no-install-recommends' to minimize image size.",
+          "Message": "'--no-install-recommends' flag is missed: 'chmod +x /init.sh \u0026\u0026  apt-get update \u0026\u0026 apt-get dist-upgrade -y --force-yes \u0026\u0026 apt-get install dos2unix \u0026\u0026  apt-get install psmisc -y -q \u0026\u0026  apt-get autoremove -y \u0026\u0026 apt-get clean \u0026\u0026  rm -rf /var/cache/* \u0026\u0026 rm -rf /var/lib/apt/lists/* \u0026\u0026  dos2unix -n /init.sh /initx.sh \u0026\u0026 chmod +x /initx.sh'",
+          "Namespace": "builtin.dockerfile.DS029",
+          "Query": "data.builtin.dockerfile.DS029.deny",
+          "Resolution": "Add '--no-install-recommends' flag to 'apt-get'",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0029",
+          "References": [
+            "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+            "https://avd.aquasec.com/misconfig/ds-0029"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 7,
+            "EndLine": 13,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 7,
+                  "Content": "RUN \\",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mRUN\u001b[0m \u001b[38;5;124m\\",
+                  "FirstCause": true,
+                  "LastCause": false
+                },
+                {
+                  "Number": 8,
+                  "Content": " chmod +x /init.sh \u0026\u0026 \\",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[0m chmod +x /init.sh \u001b[38;5;245m\u0026\u0026\u001b[0m \u001b[38;5;124m\\",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 9,
+                  "Content": " apt-get update \u0026\u0026 apt-get dist-upgrade -y --force-yes \u0026\u0026 apt-get install dos2unix \u0026\u0026 \\",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[0m apt-get update \u001b[38;5;245m\u0026\u0026\u001b[0m apt-get dist-upgrade -y --force-yes \u001b[38;5;245m\u0026\u0026\u001b[0m apt-get install dos2unix \u001b[38;5;245m\u0026\u0026\u001b[0m \u001b[38;5;124m\\",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 10,
+                  "Content": " apt-get install psmisc -y -q \u0026\u0026 \\",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[0m apt-get install psmisc -y -q \u001b[38;5;245m\u0026\u0026\u001b[0m \u001b[38;5;124m\\",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 11,
+                  "Content": " apt-get autoremove -y \u0026\u0026 apt-get clean \u0026\u0026 \\",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[0m apt-get autoremove -y \u001b[38;5;245m\u0026\u0026\u001b[0m apt-get clean \u001b[38;5;245m\u0026\u0026\u001b[0m \u001b[38;5;124m\\",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 12,
+                  "Content": " rm -rf /var/cache/* \u0026\u0026 rm -rf /var/lib/apt/lists/* \u0026\u0026 \\",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[0m rm -rf /var/cache/* \u001b[38;5;245m\u0026\u0026\u001b[0m rm -rf /var/lib/apt/lists/* \u001b[38;5;245m\u0026\u0026\u001b[0m \u001b[38;5;124m\\",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 13,
+                  "Content": " dos2unix -n /init.sh /initx.sh \u0026\u0026 chmod +x /initx.sh",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[0m dos2unix -n /init.sh /initx.sh \u001b[38;5;245m\u0026\u0026\u001b[0m chmod +x /initx.sh",
+                  "FirstCause": false,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Target": "monitoring/Dockerfile",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 23,
+        "Failures": 4
+      },
+      "Misconfigurations": [
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0002",
+          "Title": "Image user should not be 'root'",
+          "Description": "Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.",
+          "Message": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+          "Namespace": "builtin.dockerfile.DS002",
+          "Query": "data.builtin.dockerfile.DS002.deny",
+          "Resolution": "Add 'USER \u003cnon root user name\u003e' line to the Dockerfile",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0002",
+          "References": [
+            "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+            "https://avd.aquasec.com/misconfig/ds-0002"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0005",
+          "Title": "ADD instead of COPY",
+          "Description": "You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.",
+          "Message": "Consider using 'COPY ./target/monitoring.jar /app/' command instead of 'ADD ./target/monitoring.jar /app/'",
+          "Namespace": "builtin.dockerfile.DS005",
+          "Query": "data.builtin.dockerfile.DS005.deny",
+          "Resolution": "Use COPY instead of ADD",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0005",
+          "References": [
+            "https://docs.docker.com/engine/reference/builder/#add",
+            "https://avd.aquasec.com/misconfig/ds-0005"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 4,
+            "EndLine": 4,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 4,
+                  "Content": "ADD ./target/monitoring.jar /app/",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mADD\u001b[0m ./target/monitoring.jar /app/",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0022",
+          "Title": "Deprecated MAINTAINER used",
+          "Description": "MAINTAINER has been deprecated since Docker 1.13.0.",
+          "Message": "MAINTAINER should not be used: 'MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e'",
+          "Namespace": "builtin.dockerfile.DS022",
+          "Query": "data.builtin.dockerfile.DS022.deny",
+          "Resolution": "Use LABEL instead of MAINTAINER",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0022",
+          "References": [
+            "https://docs.docker.com/engine/deprecated/#maintainer-in-dockerfile",
+            "https://avd.aquasec.com/misconfig/ds-0022"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 2,
+            "EndLine": 2,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 2,
+                  "Content": "MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mMAINTAINER\u001b[0m\u001b[38;5;37m Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e\u001b[0m",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0026",
+          "Title": "No HEALTHCHECK defined",
+          "Description": "You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.",
+          "Message": "Add HEALTHCHECK instruction in your Dockerfile",
+          "Namespace": "builtin.dockerfile.DS026",
+          "Query": "data.builtin.dockerfile.DS026.deny",
+          "Resolution": "Add HEALTHCHECK instruction in Dockerfile",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0026",
+          "References": [
+            "https://blog.aquasec.com/docker-security-best-practices",
+            "https://avd.aquasec.com/misconfig/ds-0026"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        }
+      ]
+    },
+    {
+      "Target": "notification-service/Dockerfile",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 23,
+        "Failures": 4
+      },
+      "Misconfigurations": [
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0002",
+          "Title": "Image user should not be 'root'",
+          "Description": "Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.",
+          "Message": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+          "Namespace": "builtin.dockerfile.DS002",
+          "Query": "data.builtin.dockerfile.DS002.deny",
+          "Resolution": "Add 'USER \u003cnon root user name\u003e' line to the Dockerfile",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0002",
+          "References": [
+            "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+            "https://avd.aquasec.com/misconfig/ds-0002"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0005",
+          "Title": "ADD instead of COPY",
+          "Description": "You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.",
+          "Message": "Consider using 'COPY ./target/notification-service.jar /app/' command instead of 'ADD ./target/notification-service.jar /app/'",
+          "Namespace": "builtin.dockerfile.DS005",
+          "Query": "data.builtin.dockerfile.DS005.deny",
+          "Resolution": "Use COPY instead of ADD",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0005",
+          "References": [
+            "https://docs.docker.com/engine/reference/builder/#add",
+            "https://avd.aquasec.com/misconfig/ds-0005"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 4,
+            "EndLine": 4,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 4,
+                  "Content": "ADD ./target/notification-service.jar /app/",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mADD\u001b[0m ./target/notification-service.jar /app/",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0022",
+          "Title": "Deprecated MAINTAINER used",
+          "Description": "MAINTAINER has been deprecated since Docker 1.13.0.",
+          "Message": "MAINTAINER should not be used: 'MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e'",
+          "Namespace": "builtin.dockerfile.DS022",
+          "Query": "data.builtin.dockerfile.DS022.deny",
+          "Resolution": "Use LABEL instead of MAINTAINER",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0022",
+          "References": [
+            "https://docs.docker.com/engine/deprecated/#maintainer-in-dockerfile",
+            "https://avd.aquasec.com/misconfig/ds-0022"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 2,
+            "EndLine": 2,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 2,
+                  "Content": "MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mMAINTAINER\u001b[0m\u001b[38;5;37m Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e\u001b[0m",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0026",
+          "Title": "No HEALTHCHECK defined",
+          "Description": "You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.",
+          "Message": "Add HEALTHCHECK instruction in your Dockerfile",
+          "Namespace": "builtin.dockerfile.DS026",
+          "Query": "data.builtin.dockerfile.DS026.deny",
+          "Resolution": "Add HEALTHCHECK instruction in Dockerfile",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0026",
+          "References": [
+            "https://blog.aquasec.com/docker-security-best-practices",
+            "https://avd.aquasec.com/misconfig/ds-0026"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        }
+      ]
+    },
+    {
+      "Target": "registry/Dockerfile",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 23,
+        "Failures": 4
+      },
+      "Misconfigurations": [
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0002",
+          "Title": "Image user should not be 'root'",
+          "Description": "Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.",
+          "Message": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+          "Namespace": "builtin.dockerfile.DS002",
+          "Query": "data.builtin.dockerfile.DS002.deny",
+          "Resolution": "Add 'USER \u003cnon root user name\u003e' line to the Dockerfile",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0002",
+          "References": [
+            "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+            "https://avd.aquasec.com/misconfig/ds-0002"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0005",
+          "Title": "ADD instead of COPY",
+          "Description": "You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.",
+          "Message": "Consider using 'COPY ./target/registry.jar /app/' command instead of 'ADD ./target/registry.jar /app/'",
+          "Namespace": "builtin.dockerfile.DS005",
+          "Query": "data.builtin.dockerfile.DS005.deny",
+          "Resolution": "Use COPY instead of ADD",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0005",
+          "References": [
+            "https://docs.docker.com/engine/reference/builder/#add",
+            "https://avd.aquasec.com/misconfig/ds-0005"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 4,
+            "EndLine": 4,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 4,
+                  "Content": "ADD ./target/registry.jar /app/",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mADD\u001b[0m ./target/registry.jar /app/",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0022",
+          "Title": "Deprecated MAINTAINER used",
+          "Description": "MAINTAINER has been deprecated since Docker 1.13.0.",
+          "Message": "MAINTAINER should not be used: 'MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e'",
+          "Namespace": "builtin.dockerfile.DS022",
+          "Query": "data.builtin.dockerfile.DS022.deny",
+          "Resolution": "Use LABEL instead of MAINTAINER",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0022",
+          "References": [
+            "https://docs.docker.com/engine/deprecated/#maintainer-in-dockerfile",
+            "https://avd.aquasec.com/misconfig/ds-0022"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 2,
+            "EndLine": 2,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 2,
+                  "Content": "MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mMAINTAINER\u001b[0m\u001b[38;5;37m Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e\u001b[0m",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0026",
+          "Title": "No HEALTHCHECK defined",
+          "Description": "You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.",
+          "Message": "Add HEALTHCHECK instruction in your Dockerfile",
+          "Namespace": "builtin.dockerfile.DS026",
+          "Query": "data.builtin.dockerfile.DS026.deny",
+          "Resolution": "Add HEALTHCHECK instruction in Dockerfile",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0026",
+          "References": [
+            "https://blog.aquasec.com/docker-security-best-practices",
+            "https://avd.aquasec.com/misconfig/ds-0026"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        }
+      ]
+    },
+    {
+      "Target": "statistics-service/Dockerfile",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 23,
+        "Failures": 4
+      },
+      "Misconfigurations": [
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0002",
+          "Title": "Image user should not be 'root'",
+          "Description": "Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.",
+          "Message": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+          "Namespace": "builtin.dockerfile.DS002",
+          "Query": "data.builtin.dockerfile.DS002.deny",
+          "Resolution": "Add 'USER \u003cnon root user name\u003e' line to the Dockerfile",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0002",
+          "References": [
+            "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+            "https://avd.aquasec.com/misconfig/ds-0002"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0005",
+          "Title": "ADD instead of COPY",
+          "Description": "You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.",
+          "Message": "Consider using 'COPY ./target/statistics-service.jar /app/' command instead of 'ADD ./target/statistics-service.jar /app/'",
+          "Namespace": "builtin.dockerfile.DS005",
+          "Query": "data.builtin.dockerfile.DS005.deny",
+          "Resolution": "Use COPY instead of ADD",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0005",
+          "References": [
+            "https://docs.docker.com/engine/reference/builder/#add",
+            "https://avd.aquasec.com/misconfig/ds-0005"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 4,
+            "EndLine": 4,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 4,
+                  "Content": "ADD ./target/statistics-service.jar /app/",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mADD\u001b[0m ./target/statistics-service.jar /app/",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0022",
+          "Title": "Deprecated MAINTAINER used",
+          "Description": "MAINTAINER has been deprecated since Docker 1.13.0.",
+          "Message": "MAINTAINER should not be used: 'MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e'",
+          "Namespace": "builtin.dockerfile.DS022",
+          "Query": "data.builtin.dockerfile.DS022.deny",
+          "Resolution": "Use LABEL instead of MAINTAINER",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0022",
+          "References": [
+            "https://docs.docker.com/engine/deprecated/#maintainer-in-dockerfile",
+            "https://avd.aquasec.com/misconfig/ds-0022"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 2,
+            "EndLine": 2,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 2,
+                  "Content": "MAINTAINER Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mMAINTAINER\u001b[0m\u001b[38;5;37m Alexander Lukyanchikov \u003csqshq@sqshq.com\u003e\u001b[0m",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0026",
+          "Title": "No HEALTHCHECK defined",
+          "Description": "You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.",
+          "Message": "Add HEALTHCHECK instruction in your Dockerfile",
+          "Namespace": "builtin.dockerfile.DS026",
+          "Query": "data.builtin.dockerfile.DS026.deny",
+          "Resolution": "Add HEALTHCHECK instruction in Dockerfile",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0026",
+          "References": [
+            "https://blog.aquasec.com/docker-security-best-practices",
+            "https://avd.aquasec.com/misconfig/ds-0026"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        }
+      ]
+    },
+    {
+      "Target": "turbine-stream-service/Dockerfile",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 23,
+        "Failures": 4
+      },
+      "Misconfigurations": [
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0002",
+          "Title": "Image user should not be 'root'",
+          "Description": "Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.",
+          "Message": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+          "Namespace": "builtin.dockerfile.DS002",
+          "Query": "data.builtin.dockerfile.DS002.deny",
+          "Resolution": "Add 'USER \u003cnon root user name\u003e' line to the Dockerfile",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0002",
+          "References": [
+            "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+            "https://avd.aquasec.com/misconfig/ds-0002"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0005",
+          "Title": "ADD instead of COPY",
+          "Description": "You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.",
+          "Message": "Consider using 'COPY ./target/turbine-stream-service.jar /app/' command instead of 'ADD ./target/turbine-stream-service.jar /app/'",
+          "Namespace": "builtin.dockerfile.DS005",
+          "Query": "data.builtin.dockerfile.DS005.deny",
+          "Resolution": "Use COPY instead of ADD",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0005",
+          "References": [
+            "https://docs.docker.com/engine/reference/builder/#add",
+            "https://avd.aquasec.com/misconfig/ds-0005"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 4,
+            "EndLine": 4,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 4,
+                  "Content": "ADD ./target/turbine-stream-service.jar /app/",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mADD\u001b[0m ./target/turbine-stream-service.jar /app/",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0022",
+          "Title": "Deprecated MAINTAINER used",
+          "Description": "MAINTAINER has been deprecated since Docker 1.13.0.",
+          "Message": "MAINTAINER should not be used: 'MAINTAINER Chi Dov \u003cd.chiproeng@gmail.com\u003e'",
+          "Namespace": "builtin.dockerfile.DS022",
+          "Query": "data.builtin.dockerfile.DS022.deny",
+          "Resolution": "Use LABEL instead of MAINTAINER",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0022",
+          "References": [
+            "https://docs.docker.com/engine/deprecated/#maintainer-in-dockerfile",
+            "https://avd.aquasec.com/misconfig/ds-0022"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general",
+            "StartLine": 2,
+            "EndLine": 2,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 2,
+                  "Content": "MAINTAINER Chi Dov \u003cd.chiproeng@gmail.com\u003e",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;64mMAINTAINER\u001b[0m\u001b[38;5;37m Chi Dov \u003cd.chiproeng@gmail.com\u003e\u001b[0m",
+                  "FirstCause": true,
+                  "LastCause": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "Dockerfile Security Check",
+          "ID": "DS-0026",
+          "Title": "No HEALTHCHECK defined",
+          "Description": "You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.",
+          "Message": "Add HEALTHCHECK instruction in your Dockerfile",
+          "Namespace": "builtin.dockerfile.DS026",
+          "Query": "data.builtin.dockerfile.DS026.deny",
+          "Resolution": "Add HEALTHCHECK instruction in Dockerfile",
+          "Severity": "LOW",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/ds-0026",
+          "References": [
+            "https://blog.aquasec.com/docker-security-best-practices",
+            "https://avd.aquasec.com/misconfig/ds-0026"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Provider": "Dockerfile",
+            "Service": "general"
+          }
+        }
+      ]
+    }
+  ]
+}
