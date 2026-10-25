@@ -1,0 +1,240 @@
+# Runs the whole DevOps chain once and saves the real results (numbers and
+# screenshots) to the "ci-results" branch, for the internship report.
+name: report
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - '.github/workflows/report.yml'
+      - '.github/scripts/**'
+
+permissions:
+  contents: write
+
+env:
+  CONFIG_SERVICE_PASSWORD: config-pass
+  NOTIFICATION_SERVICE_PASSWORD: notification-pass
+  STATISTICS_SERVICE_PASSWORD: statistics-pass
+  ACCOUNT_SERVICE_PASSWORD: account-pass
+  MONGODB_PASSWORD: mongo-pass
+  SONAR_PASSWORD: Piggy-Report-2026!
+
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+    services:
+      sonarqube:
+        image: sonarqube:10.6-community
+        env:
+          SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: 'true'
+        ports:
+          - 9000:9000
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+          cache: maven
+      - name: Build and test (Java 8)
+        run: mvn -B verify -Dmaven.test.failure.ignore=true 2>&1 | tee build.log
+      - name: Test summary
+        run: |
+          mkdir -p out
+          cp build.log out/build.log
+          python3 - <<'EOF' > out/tests.md
+          import glob, xml.etree.ElementTree as ET, collections
+          tot = collections.defaultdict(lambda: [0, 0, 0, 0])
+          for f in glob.glob('*/target/surefire-reports/TEST-*.xml'):
+              m = f.split('/')[0]; r = ET.parse(f).getroot()
+              for i, k in enumerate(['tests', 'failures', 'errors', 'skipped']):
+                  tot[m][i] += int(r.get(k, 0))
+          print('| Module | Tests | Failures | Errors | Skipped |')
+          print('| --- | --- | --- | --- | --- |')
+          for m in sorted(tot):
+              print('| %s | %d | %d | %d | %d |' % (m, *tot[m]))
+          EOF
+          cat out/tests.md >> $GITHUB_STEP_SUMMARY
+      - name: Prepare SonarQube
+        run: |
+          for i in $(seq 1 60); do
+            s=$(curl -s localhost:9000/api/system/status | jq -r .status || true)
+            [ "$s" = "UP" ] && break; sleep 5
+          done
+          curl -sf -u admin:admin -X POST "localhost:9000/api/users/change_password" \
+            --data-urlencode login=admin --data-urlencode previousPassword=admin \
+            --data-urlencode "password=$SONAR_PASSWORD"
+          echo "SONAR_TOKEN=$(curl -sf -u "admin:$SONAR_PASSWORD" -X POST \
+            'localhost:9000/api/user_tokens/generate?name=ci' | jq -r .token)" >> $GITHUB_ENV
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: SonarQube analysis (scanner on Java 17)
+        run: |
+          mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:3.11.0.3922:sonar \
+            -Dsonar.host.url=http://localhost:9000 -Dsonar.token=$SONAR_TOKEN \
+            -Dsonar.projectKey=piggymetrics -Dsonar.projectName=PiggyMetrics \
+            -Dsonar.qualitygate.wait=true 2>&1 | tail -40 | tee out/sonar-scan.log || true
+      - name: Collect SonarQube results
+        run: |
+          M=bugs,vulnerabilities,code_smells,security_hotspots,coverage,ncloc,duplicated_lines_density,sqale_index,reliability_rating,security_rating,sqale_rating
+          A="-u $SONAR_TOKEN:"
+          curl -s $A "localhost:9000/api/measures/component?component=piggymetrics&metricKeys=$M" > out/sonar-project.json
+          curl -s $A "localhost:9000/api/measures/component_tree?component=piggymetrics&strategy=children&qualifiers=DIR&metricKeys=$M&ps=50" > out/sonar-modules.json
+          curl -s $A "localhost:9000/api/qualitygates/project_status?projectKey=piggymetrics" > out/sonar-gate.json
+          curl -s $A "localhost:9000/api/issues/search?componentKeys=piggymetrics&facets=rules,severities,types&ps=1" > out/sonar-issue-facets.json
+          curl -s $A "localhost:9000/api/server/version" > out/sonar-version.txt
+      - name: SonarQube screenshots
+        run: |
+          npm i --no-save playwright@1.47.2 >/dev/null && npx playwright install --with-deps chromium >/dev/null
+          mkdir -p out/screenshots
+          node .github/scripts/screenshots.js out/screenshots \
+            "sonar-overview=http://localhost:9000/dashboard?id=piggymetrics@5" \
+            "sonar-issues=http://localhost:9000/project/issues?id=piggymetrics&resolved=false@5" \
+            "sonar-measures=http://localhost:9000/component_measures?id=piggymetrics@5"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sonarqube
+          path: out
+
+  trivy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+          cache: maven
+      - run: mvn -B package -DskipTests
+      - name: Build images
+        run: |
+          for m in config registry gateway auth-service account-service statistics-service notification-service monitoring turbine-stream-service; do
+            docker build -q -t piggymetrics-$m:ci $m
+          done
+          # Same account-service jar on a maintained Java 8 base image, to compare
+          sed 's#^FROM java:8-jre#FROM eclipse-temurin:8-jre#' account-service/Dockerfile > /tmp/Dockerfile.temurin
+          docker build -q -t piggymetrics-account-service:temurin -f /tmp/Dockerfile.temurin account-service
+      - name: Scan with Trivy
+        run: |
+          mkdir -p out
+          T="docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.cache/trivy:/root/.cache/ -v $PWD:/src aquasec/trivy:0.56.2"
+          $T --version > out/trivy-version.txt
+          for img in $(docker images --format '{{.Repository}}:{{.Tag}}' | grep '^piggymetrics-'); do
+            f=$(echo $img | tr ':/' '__')
+            $T image --quiet --scanners vuln --format json -o /src/out/$f.json $img
+          done
+          $T fs --quiet --scanners vuln,secret --format json -o /src/out/fs.json /src
+          $T config --quiet --format json -o /src/out/config.json /src
+          python3 - <<'EOF' > out/trivy.md
+          import json, glob, collections
+          print('| Target | Critical | High | Medium | Low |')
+          print('| --- | --- | --- | --- | --- |')
+          for f in sorted(glob.glob('out/*.json')):
+              d = json.load(open(f)); c = collections.Counter()
+              for r in d.get('Results', []) or []:
+                  for v in r.get('Vulnerabilities', []) or []: c[v['Severity']] += 1
+                  for v in r.get('Misconfigurations', []) or []: c[v['Severity']] += 1
+                  for v in r.get('Secrets', []) or []: c[v['Severity']] += 1
+              print('| %s | %d | %d | %d | %d |' % (f[4:-5], c['CRITICAL'], c['HIGH'], c['MEDIUM'], c['LOW']))
+          EOF
+          cat out/trivy.md >> $GITHUB_STEP_SUMMARY
+          docker images --format '{{.Repository}}:{{.Tag}} {{.Size}}' | grep piggymetrics > out/image-sizes.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: trivy
+          path: out
+
+  stack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+          cache: maven
+      - run: mvn -B package -DskipTests
+      - name: Start the application with Prometheus and Grafana
+        run: |
+          mkdir -p out
+          START=$(date +%s)
+          docker compose -f docker-compose.yml -f docker-compose.ci.yml -f docker-compose.observability.yml \
+            up -d --build rabbitmq config registry gateway auth-service auth-mongodb account-service account-mongodb \
+            statistics-service statistics-mongodb notification-service notification-mongodb monitoring turbine-stream-service \
+            prometheus grafana 2>&1 | tail -30
+          for i in $(seq 1 60); do
+            up=$(curl -s 'localhost:9090/api/v1/query?query=sum(up)' | jq -r '.data.result[0].value[1] // 0')
+            echo "$(( $(date +%s) - START ))s: $up targets up"
+            [ "$up" = "9" ] && break; sleep 10
+          done
+          echo "$(( $(date +%s) - START ))" > out/startup-seconds.txt
+      - name: Generate traffic
+        run: |
+          for i in $(seq 1 120); do
+            curl -s -o /dev/null localhost/ ; curl -s -o /dev/null localhost/accounts/demo
+            curl -s -o /dev/null localhost/statistics/demo ; curl -s -o /dev/null localhost/accounts/current
+            sleep 1
+          done
+      - name: Collect results
+        run: |
+          docker compose -f docker-compose.yml -f docker-compose.ci.yml -f docker-compose.observability.yml ps -a > out/compose-ps.txt
+          docker stats --no-stream --format '{{.Name}} {{.MemUsage}} {{.CPUPerc}}' > out/docker-stats.txt
+          curl -s localhost:9090/api/v1/targets > out/prometheus-targets.json
+          curl -s 'localhost:9090/api/v1/query?query=up' > out/prometheus-up.json
+          curl -s 'localhost:9090/api/v1/query?query=sum%20by%20(job)%20(http_server_requests_seconds_count)' > out/prometheus-requests.json
+          curl -s -o /dev/null -w '%{http_code}\n' localhost/ > out/gateway-http.txt
+          free -m > out/runner-memory.txt
+      - name: Screenshots
+        run: |
+          npm i --no-save playwright@1.47.2 >/dev/null && npx playwright install --with-deps chromium >/dev/null
+          mkdir -p out/screenshots
+          node .github/scripts/screenshots.js out/screenshots \
+            "app=http://localhost/@3" \
+            "eureka=http://localhost:8761/@3" \
+            "prometheus-targets=http://localhost:9090/targets@3" \
+            "grafana-dashboard=http://localhost:3000/d/piggymetrics?orgId=1&from=now-15m&to=now&kiosk@15"
+      - name: Alert test (stop statistics-service)
+        run: |
+          docker compose -f docker-compose.yml -f docker-compose.ci.yml stop statistics-service
+          for i in $(seq 1 30); do
+            s=$(curl -s localhost:9090/api/v1/alerts | jq -r '[.data.alerts[] | select(.labels.alertname=="ServiceDown") | .state] | first // "none"')
+            echo "$((i*10))s: $s"; [ "$s" = "firing" ] && break; sleep 10
+          done | tee out/alert-test.txt
+          curl -s localhost:9090/api/v1/alerts > out/prometheus-alerts.json
+          node .github/scripts/screenshots.js out/screenshots \
+            "prometheus-alert=http://localhost:9090/alerts@3" \
+            "grafana-service-down=http://localhost:3000/d/piggymetrics?orgId=1&from=now-15m&to=now&kiosk@15"
+      - name: Logs if something failed
+        if: always()
+        run: |
+          mkdir -p out/logs
+          for s in $(docker compose -f docker-compose.yml -f docker-compose.ci.yml -f docker-compose.observability.yml ps -a --services); do
+            docker compose -f docker-compose.yml -f docker-compose.ci.yml -f docker-compose.observability.yml logs --no-color --tail 150 $s > out/logs/$s.log 2>&1
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stack
+          path: out
+
+  publish:
+    needs: [sonarqube, trivy, stack]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: results
+      - name: Push results to the ci-results branch
+        run: |
+          cd results
+          echo "run ${{ github.run_id }} at $(date -u +%Y-%m-%dT%H:%MZ), commit ${{ github.sha }}" > RUN.txt
+          echo "sonarqube=${{ needs.sonarqube.result }} trivy=${{ needs.trivy.result }} stack=${{ needs.stack.result }}" >> RUN.txt
+          git init -q -b ci-results
+          git config user.name github-actions; git config user.email github-actions@users.noreply.github.com
+          git add -A && git commit -qm "CI results ${{ github.run_id }}"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" ci-results

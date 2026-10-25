@@ -1,0 +1,22 @@
+# Builds the Java services from this repository's code (with the Prometheus changes).
+# The MongoDB and RabbitMQ images are taken as published.
+version: '2.1'
+services:
+  config:
+    build: config
+  registry:
+    build: registry
+  gateway:
+    build: gateway
+  auth-service:
+    build: auth-service
+  account-service:
+    build: account-service
+  statistics-service:
+    build: statistics-service
+  notification-service:
+    build: notification-service
+  monitoring:
+    build: monitoring
+  turbine-stream-service:
+    build: turbine-stream-service
